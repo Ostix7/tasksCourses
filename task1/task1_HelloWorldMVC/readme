@@ -1,0 +1,2 @@
+Hometask for the first leson. Have validation of word "hello" and word "word" in the model. Then added to view new feedbacks for user and finally in controller 
+i changed method processUser and added inputs
