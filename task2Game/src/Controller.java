@@ -26,7 +26,7 @@ public class Controller {
          int max=100;
         while (true) {
             int userInput = inputIntValueWithScanner(sc,min,max);
-            if ((userInput > 100) || (userInput < 0)) {
+            if ((userInput >= 100) || (userInput <= 0)) {
                 view.printMessage(View.WRONG_BOUND);
                 continue;
             }
