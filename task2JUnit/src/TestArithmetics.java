@@ -47,7 +47,7 @@ public class TestArithmetics {
 @Test
     public void testDivException(){
         exp.expect(ArithmeticException.class);
-        a.div(10.0,0.0);
+        a.div(10,0);
     }
 
     @Test()
