@@ -1,3 +1,7 @@
+package Model;
+
+import Model.User;
+
 public class UserInfoActivity {
 
 

@@ -1,3 +1,10 @@
+package View;
+
+import Model.User;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class View {
     // INPUT VALUES
     public static final String INPUT_NAME_DATA = "Input name value";
@@ -22,7 +29,13 @@ public class View {
     public static final String WRONG_SECOND_PHONENUMBER_NAME = "Wrong second phone number value! Repeat please!";
     public static final String WRONG_MAIL_NAME = "Wrong mail value! Repeat please!";
     public static final String WRONG_SKYPE_NAME ="Wrong skype value! Repeat please!" ;
-
+    // Resource Bundle Installation's
+    static String MESSAGES_BUNDLE_NAME = "messages";
+    public static final ResourceBundle bundle =
+            ResourceBundle.getBundle(
+                    MESSAGES_BUNDLE_NAME,
+                   // new Locale("ua", "UA"));  // Ukrainian
+    new Locale("en"));        // English
     public void printMessage(String message){
         System.out.println(message);
     }
@@ -33,8 +46,8 @@ public class View {
 
     /***
      * task 4 . output surname+space+first letter of the name + dot
-     * @param surnmame surname of the User
-     * @param name name of the User
+     * @param surnmame surname of the Model.User
+     * @param name name of the Model.User
      */
     public void printStrings(String surnmame, String name){
         char[] charName = name.toCharArray();

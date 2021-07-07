@@ -1,9 +1,14 @@
+package Controller;
+
+import Model.User;
+import View.View;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by User on 17.03.2016.
+ * Created by Model.User on 17.03.2016.
  */
 public class Controller {
     // The Constants
@@ -46,7 +51,7 @@ public class Controller {
         Scanner sc = new Scanner(System.in);
         String surn=inputSurnameValueWithScanner(sc);
         matcher=surname.matcher(surn);
-        if (!matcher.find()){
+        while (!matcher.matches()){
             view.printMessage(View.WRONG_SURNAME);
             surn=inputSurnameValueWithScanner(sc);
         }

@@ -1,3 +1,5 @@
+package Model;
+
 import java.util.Objects;
 
 public class User {
@@ -130,11 +132,10 @@ public class User {
 
     /***
      *
-     * @return to String for User
      */
     @Override
     public String toString() {
-        return "User with {" +
+        return "Model.User with {" +
                 "surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 ", patronymic='" + patronymic + '\'' +
