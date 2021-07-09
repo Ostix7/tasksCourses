@@ -1,14 +1,14 @@
 import Controller.Controller;
-import Model.User;
+import Model.Model;
 import View.View;
 
 public class Main {
 
     public static void main(String[] args) {
         // Initialization
-        User user = new User();
+        Model model = new Model();
         View view = new View();
-        Controller controller = new Controller(user, view);
+        Controller controller = new Controller(model, view);
         // Run
         controller.processUser();
 

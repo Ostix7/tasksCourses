@@ -1,7 +1,6 @@
-package Controller;
-
-import Model.Model;
-import View.View;
+package company.controller;
+import company.model.Model;
+import company.view.View;
 
 import java.util.Scanner;
 

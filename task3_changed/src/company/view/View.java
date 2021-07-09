@@ -1,9 +1,11 @@
-package View;
+package company.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static View.TextConstants.INPUT_STRING_DATA;
+import static company.view.TextConstant.INPUT_STRING_DATA;
+import static company.view.TextConstant.WRONG_INPUT_DATA;
+
 
 /**
  * Created by student on 26.09.2017.
@@ -15,8 +17,8 @@ public class View {
     public static final ResourceBundle bundle =
             ResourceBundle.getBundle(
                     MESSAGES_BUNDLE_NAME,
-                  // new Locale("ua", "UA"));  // Ukrainian
-    new Locale("en"));        // English
+                    new Locale("ua", "UA"));  // Ukrainian
+                    //new Locale("en"));        // English
 
     //Utilities methods
 
@@ -33,11 +35,11 @@ public class View {
      * @return
      */
     public String concatenationString(String... message){
-        StringBuilder concatString = new StringBuilder();
-        for(String v : message) {
-            concatString = concatString.append(v);
-        }
-        return new String(concatString);
+            StringBuilder concatString = new StringBuilder();
+            for(String v : message) {
+                concatString = concatString.append(v);
+            }
+            return new String(concatString);
     }
 
     public void printStringInput(String message) {
@@ -48,7 +50,7 @@ public class View {
 
     public void printWrongStringInput(String message) {
         printMessage(concatenationString(
-                bundle.getString(TextConstants.WRONG_INPUT_DATA),
+                bundle.getString(WRONG_INPUT_DATA),
                 bundle.getString(INPUT_STRING_DATA),
                 bundle.getString(message)));
     }

@@ -1,4 +1,4 @@
-package com.company.controller;
+package company.controller;
 
 /**
  * Created by student on 26.09.2017.
