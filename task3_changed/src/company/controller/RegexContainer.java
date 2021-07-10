@@ -4,6 +4,8 @@ package company.controller;
  * Created by student on 26.09.2017.
  */
 public interface RegexContainer {
+    //rus
+    String REGEX_NAME_RUS = "^[A-ЯЁ][а-яё]{1,20}$";
     // Cyrillic name
     String REGEX_NAME_UKR = "^[А-ЩЬЮЯҐІЇЄ][а-щьюяґіїє']{1,20}$";
     // Latin name

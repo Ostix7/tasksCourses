@@ -1,9 +1,6 @@
-package company.controller;
+package Controller;
 
-
-import company.model.entity.LoginException;
-import company.view.TextConstant;
-import company.view.View;
+import View.View;
 
 import java.util.Scanner;
 

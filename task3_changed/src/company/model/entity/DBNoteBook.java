@@ -23,7 +23,7 @@ public enum DBNoteBook {
         return login;
     }
 
-    public boolean checkLogin(String loginData){
+    public static boolean checkLogin(String loginData){
         for(DBNoteBook note: DBNoteBook.values()){
             if(note.getLogin().equals(loginData)){return true;}
         }

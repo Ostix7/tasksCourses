@@ -1,12 +1,37 @@
 package company.model.entity;
 
 public class NoteBook {
-    private String femaleData;
-    private String nickData;
+    private String firstName;
+    private String loginData;
 
-    public NoteBook(String femaleData, String nickData) {
-        this.femaleData = femaleData;
-        this.nickData = nickData;
+    public NoteBook(String firstName, String loginData)
+            throws LoginException{
+        if (DBNoteBook.checkLogin(loginData)){
+            throw new LoginException("Not Unique Login",
+                    loginData);
+        }
+        this.firstName = firstName;
+        this.loginData = loginData;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public String getLoginData() {
+        return loginData;
+    }
+    public void setLoginData(String loginData) {
+        this.loginData = loginData;
+    }
+
+    @Override
+    public String toString() {
+        return "NoteBook{" +
+                "firstName='" + firstName + '\'' +
+                ", loginData='" + loginData + '\'' +
+                '}';
+    }
 }
