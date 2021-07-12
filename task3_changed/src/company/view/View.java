@@ -2,7 +2,6 @@ package company.view;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import static company.view.TextConstant.INPUT_STRING_DATA;
 import static company.view.TextConstant.WRONG_INPUT_DATA;
 
