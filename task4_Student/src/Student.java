@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Student {
+public class Student implements Cloneable {
     private int age;
     private String name;
     private String group;

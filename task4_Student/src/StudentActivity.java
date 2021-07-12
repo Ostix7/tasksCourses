@@ -9,13 +9,13 @@ public final class StudentActivity {
     private final   int yearOfStudy;
 
     public StudentActivity(Student student, int avarageMark, int yearOfStudy) {
-        this.student = student;
+        this.student = (Student) student.clone();
         this.avarageMark = avarageMark;
         this.yearOfStudy = yearOfStudy;
     }
 
     public Student getStudent() {
-        return student;
+        return (Student) student.clone();
     }
 
     public int getAvarageMark() {
