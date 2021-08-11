@@ -29,7 +29,9 @@ footer {
 .btn {
     padding-left: 10px;
 }
-
+.centerTitle{
+    text-align: center;
+}
 .alert {
     padding-top: 5px;
 }

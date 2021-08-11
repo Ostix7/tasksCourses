@@ -14,7 +14,7 @@
                 </span>
                 <label>
                     <select class="custom-select" id="select-lang">
-                        <option value="eng" th:selected="${#locale.getLanguage().toString() == 'en'}" th:text="#{footer.language.en}"></option>
+                        <option value="en" th:selected="${#locale.getLanguage().toString() == 'en'}" th:text="#{footer.language.en}"></option>
                         <option value="ru" th:selected="${#locale.getLanguage().toString() == 'ru'}" th:text="#{footer.language.ru}"></option>
                         <option disabled value="ua" th:selected="${#locale.getLanguage().toString() == 'ua'}" th:text="#{footer.language.ua}"></option>
                     </select>
