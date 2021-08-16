@@ -79,7 +79,7 @@ public class ProductController {
         return "redirect:/home";
     }
 
-    @PostMapping("/product/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable("id") long productId){
         Product product = productService.findById(productId);
         if (product != null){

@@ -1,8 +1,10 @@
 package com.ua.beautyshop;
 
 import com.ua.beautyshop.domain.Category;
+import com.ua.beautyshop.domain.Master;
 import com.ua.beautyshop.domain.Product;
 import com.ua.beautyshop.repository.CategoryRepository;
+import com.ua.beautyshop.service.MasterService;
 import com.ua.beautyshop.service.ProductService;
 import com.ua.beautyshop.domain.User;
 import com.ua.beautyshop.service.UserService;
@@ -17,13 +19,15 @@ import java.math.BigDecimal;
 @Component
 public class StartupData implements CommandLineRunner {
     private final UserService userService;
+    private final MasterService masterService;
     private final ProductService productService;
     private final CategoryRepository categoryRepository;
     private static final Logger logger = LoggerFactory.getLogger(StartupData.class);
 
     @Autowired
-    public StartupData(UserService userService, ProductService productService, CategoryRepository categoryRepository) {
+    public StartupData(UserService userService,MasterService masterService, ProductService productService, CategoryRepository categoryRepository) {
         this.userService = userService;
+        this.masterService=masterService;
         this.productService = productService;
         this.categoryRepository = categoryRepository;
     }
@@ -32,6 +36,7 @@ public class StartupData implements CommandLineRunner {
     public void run(String... args) {
         adminAccount();
         userAccount();
+        masterAccount();
         category();
         exampleProducts();
     }
@@ -46,6 +51,15 @@ public class StartupData implements CommandLineRunner {
         user.setEmail("user@example.com");
 
         userService.save(user);
+    }
+    private void masterAccount(){
+        Master master = new Master();
+
+        master.setUsername("master");
+        master.setPassword("master");
+        master.setPasswordConfirm("master");
+        master.setImageUrl("https://lh3.googleusercontent.com/proxy/S9NXghjIIzSC6ZDMST8H6-gY1iPGGbqSQ1Cqx9qQZAk4uBdZ98j7LSDB_FyWOLglHkSFVlbvzNiUuKV_N__NBBLNhmAd4a1jRYwNpi0h6SamsgcVMk-WSLrLk8ZjUR0OPky3uGqysiUQQj_6ryGNKLRfh4eEI8QbS3PR5YtJWL4qnuhkxO1GmKc4J0QSlHV0HyjE-tiiuYqzWoIxhdWoCPY");
+        masterService.save(master);
     }
 
     private void adminAccount(){

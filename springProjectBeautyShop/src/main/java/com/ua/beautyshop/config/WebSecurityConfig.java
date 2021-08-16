@@ -1,10 +1,13 @@
 package com.ua.beautyshop.config;
 
+import com.ua.beautyshop.repository.MasterRepository;
+import com.ua.beautyshop.service.impl.MasterDetailsServiceImpl;
 import com.ua.beautyshop.service.impl.UserDetailsServiceImpl;
 import com.ua.beautyshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,15 +22,22 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
+    private final MasterRepository masterRepository;
 
     @Autowired
-    public WebSecurityConfig(UserRepository userRepository) {
+    public WebSecurityConfig(UserRepository userRepository, MasterRepository masterRepository) {
         this.userRepository = userRepository;
+        this.masterRepository = masterRepository;
     }
 
+    @Primary
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl(userRepository);
+    }
+
+
+    public UserDetailsService masterDetailsService(){return new MasterDetailsServiceImpl(masterRepository);
     }
 
 
@@ -48,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/","/home","/index","/about","/help","/register","/cart/**").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**","/product/new").hasRole("ADMIN")
+                .antMatchers("/master/**","/schedule/**").hasRole("MASTER")
                 .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().invalidateHttpSession(true).clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and().headers().frameOptions().sameOrigin();
@@ -62,5 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(masterDetailsService()).passwordEncoder(passwordEncoder());
     }
 }

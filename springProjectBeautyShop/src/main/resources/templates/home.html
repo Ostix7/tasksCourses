@@ -11,10 +11,14 @@
     <div class="container">
         <div class="row">
             <nav class="side-menu">
-                <h3>Category</h3>
+                <h3 th:text="#{home.category}"></h3>
                 <ul>
                     <li th:each="cat: ${categories}"><a th:href="@{/searchByCategory(categoryId=${cat.id})}" th:text="${cat.categoryName}"></a></li>
                 </ul>
+                 <img id="filterName" style="width:34px;height:28px;background: transparent" th:src="@{/images/filterName.png}">
+                <img id="filterRate" style="width:34px;height:28px"  th:src="@{/images/filterRate.png}" th:onclick="">
+
+                <h3 th:text="#{masters.name}"> </h3>
             </nav>
 
         <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn">

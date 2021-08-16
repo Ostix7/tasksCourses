@@ -1,6 +1,8 @@
 package com.ua.beautyshop.service.impl;
 
+import com.ua.beautyshop.domain.Master;
 import com.ua.beautyshop.domain.User;
+import com.ua.beautyshop.repository.MasterRepository;
 import com.ua.beautyshop.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,31 +20,29 @@ import java.util.Objects;
 import java.util.Set;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
-    private final UserRepository userRepository;
+public class MasterDetailsServiceImpl implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(MasterDetailsServiceImpl.class);
+    private final MasterRepository masterRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public MasterDetailsServiceImpl(MasterRepository masterRepository) {
+        this.masterRepository = masterRepository;
     }
 
     @Override
         @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username){
-        User user = userRepository.findByUsername(username);
+        Master master = masterRepository.findByUsername(username);
 
-        if (user != null) {
+        if (master != null) {
             Set<GrantedAuthority> authorities = new HashSet<>();
-            if (Objects.equals(username, "admin")) {
-                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            }else {
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            }
-            logger.debug(String.format("User with name: %s and password: %s created.", user.getUsername(), user.getPassword()));
-            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+
+                authorities.add(new SimpleGrantedAuthority("ROLE_MASTER"));
+
+            logger.debug(String.format("User with name: %s and password: %s created.", master.getUsername(), master.getPassword()));
+            return new org.springframework.security.core.userdetails.User(master.getUsername(), master.getPassword(), authorities);
         }else{
-            throw new UsernameNotFoundException("User " + username + " not found!");
+            throw new UsernameNotFoundException("Master " + username + " not found!");
         }
     }
 
