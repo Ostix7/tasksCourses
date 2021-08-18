@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MasterServiceImpl implements MasterService {
     private final MasterRepository masterRepository;
@@ -64,5 +66,10 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public Master findById(long id) {
         return masterRepository.findById(id);
+    }
+
+    @Override
+    public List<Master> findAll() {
+        return masterRepository.findAll();
     }
 }

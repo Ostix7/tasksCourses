@@ -27,6 +27,10 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = true)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "master_id", nullable = true)
+    private Master master;
+
     @Column(name = "description",length = 500)
     @NotNull
     @NotEmpty
@@ -52,6 +56,7 @@ public class Product {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 
 }
 

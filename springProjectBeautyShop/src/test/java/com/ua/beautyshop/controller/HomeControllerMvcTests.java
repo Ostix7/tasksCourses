@@ -1,6 +1,8 @@
 package com.ua.beautyshop.controller;
 
 
+import com.ua.beautyshop.repository.ProductRepository;
+import com.ua.beautyshop.service.MasterService;
 import com.ua.beautyshop.service.ProductService;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +26,8 @@ public class HomeControllerMvcTests {
 
     @MockBean
     private ProductService productService;
+    private MasterService masterService;
+    private ProductRepository productRepository;
 
     @Before
     public void setUp() {
@@ -31,7 +35,7 @@ public class HomeControllerMvcTests {
         viewResolver.setPrefix("/WEB-INF/jsp/view/");
         viewResolver.setSuffix(".jsp");
 
-        mockMvc = MockMvcBuilders.standaloneSetup(new HomeController(productService))
+        mockMvc = MockMvcBuilders.standaloneSetup(new HomeController(productService,productRepository,masterService))
                 .setViewResolvers(viewResolver)
                 .build();
     }

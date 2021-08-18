@@ -2,6 +2,7 @@ package com.ua.beautyshop.controller;
 
 import com.ua.beautyshop.domain.Product;
 import com.ua.beautyshop.service.CategoryService;
+import com.ua.beautyshop.service.MasterService;
 import com.ua.beautyshop.service.ProductService;
 import com.ua.beautyshop.validator.ProductValidator;
 import org.slf4j.Logger;
@@ -21,10 +22,13 @@ public class ProductController {
     private final ProductService productService;
     private final ProductValidator productValidator;
     private final CategoryService categoryService;
+    private final MasterService masterService;
+
 
     @Autowired
-    public ProductController(ProductService productService, ProductValidator productValidator, CategoryService categoryService) {
+    public ProductController(ProductService productService,MasterService masterService, ProductValidator productValidator, CategoryService categoryService) {
         this.productService = productService;
+        this.masterService=masterService;
         this.productValidator = productValidator;
         this.categoryService = categoryService;
     }
@@ -33,6 +37,7 @@ public class ProductController {
     public String newProduct(Model model) {
         model.addAttribute("productForm", new Product());
         model.addAttribute("method", "new");
+        model.addAttribute("masters",masterService.findAll());
         model.addAttribute("categories", categoryService.findAll());
         return "product";
     }
@@ -66,17 +71,13 @@ public class ProductController {
 
     @PostMapping("/product/edit/{id}")
     public String editProduct(@PathVariable("id") long productId, @ModelAttribute("productForm") Product productForm, BindingResult bindingResult, Model model){
-        productValidator.validate(productForm, bindingResult);
+        //productValidator.validate(productForm, bindingResult);
 
-        if (bindingResult.hasErrors()) {
-            logger.error(String.valueOf(bindingResult.getFieldError()));
-            model.addAttribute("method", "edit");
-            return "product";
-        }
-        productService.edit(productId, productForm);
-        logger.debug(String.format("Product with id: %s has been successfully edited.", productId));
+            //productService.edit(productId, productForm);
+            //logger.debug(String.format("Product with id: %s has been successfully edited.", productId));
+            return "redirect:/home";
 
-        return "redirect:/home";
+
     }
 
     @GetMapping("/product/delete/{id}")

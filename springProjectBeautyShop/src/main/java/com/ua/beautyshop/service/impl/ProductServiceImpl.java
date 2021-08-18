@@ -4,6 +4,7 @@ import com.ua.beautyshop.domain.Product;
 import com.ua.beautyshop.repository.ProductRepository;
 import com.ua.beautyshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +44,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findAll() {
+       return productRepository.findAll();
+    }
+
+    @Override
     public List<Product> findAllByOrderByIdAsc() {
         return productRepository.findAllByOrderByIdAsc();
     }
@@ -56,4 +62,6 @@ public class ProductServiceImpl implements ProductService {
     public long count() {
         return productRepository.count();
     }
+
+
 }
