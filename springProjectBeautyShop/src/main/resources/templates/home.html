@@ -17,22 +17,38 @@
                 </ul>
                 <h3 th:text="#{masters.name}"> </h3>
                 <ul>
-                    <li th:each="mast: ${masters}"><a th:href="@{/searchByMaster(masterId=${mast.id})}" th:text="${mast.getUsername()+' ('+mast.getRate()+')'}"></a></li>
+                    <li th:each="mast: ${masters}"><a th:href="@{/searchByMaster(masterId=${mast.getId()})}" th:text="${mast.getUsername()+' ('+mast.getRate()+')'}"></a></li>
                 </ul>
+                <div class="row">
+                    <div class="btn-group sort-btn">
+                        <form action="#" th:action="@{/sortMasterByName}">
+                            <button  class="btn btn-primary" type="submit"th:text="#{masters.sortName}"></button>
+                        </form>
+                    </div>
+
+                    <div class="btn-group sort-btn">
+                        <form th:action="@{/sortMasterByRate}" >
+                            <button  class="btn btn-primary" type="submit"th:text="#{masters.sortRate}"></button>
+                        </form>
+                    </div>
+
+                </div>
             </nav>
 
 
             <button sec:authorize="hasRole('ROLE_MASTER')" class="btn-block" th:text="#{masters.schedule}"></button>
 
+
+
+
+
+
         <button sec:authorize="hasRole('ROLE_ADMIN')" class="btn">
         <a th:href="@{product/new}"><i class="fas fa-plus fa-2x"></i></a>
         </button>
     <div sec:authorize="!hasRole('ROLE_MASTER')" class="col card-deck ml-5 my-3" th:if="${!products.isEmpty()}" >
-        <div class="container">
-            <div class="btn-group sort-btn">
-                <button th:onclick="sort" class="btn btn-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort</button>
-            </div>
-        </div>
+
+
                 <div class="card" th:each="product : ${products}">
                     <div sec:authorize="hasRole('ROLE_ADMIN')" class="admin">
                         <button class="btn">

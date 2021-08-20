@@ -71,10 +71,10 @@ public class ProductController {
 
     @PostMapping("/product/edit/{id}")
     public String editProduct(@PathVariable("id") long productId, @ModelAttribute("productForm") Product productForm, BindingResult bindingResult, Model model){
-        //productValidator.validate(productForm, bindingResult);
+        productValidator.validate(productForm, bindingResult);
 
-            //productService.edit(productId, productForm);
-            //logger.debug(String.format("Product with id: %s has been successfully edited.", productId));
+            productService.edit(productId, productForm);
+            logger.debug(String.format("Product with id: %s has been successfully edited.", productId));
             return "redirect:/home";
 
 

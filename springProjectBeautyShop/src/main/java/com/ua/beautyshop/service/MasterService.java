@@ -11,6 +11,8 @@ public interface MasterService {
     void login(String username, String password);
     Master findByUsername(String username);
     Master findById(long id);
+    Master findByRate(double rate);
     List<Master> findAll();
+
 }
 

@@ -7,17 +7,18 @@ import com.ua.beautyshop.service.CategoryService;
 import com.ua.beautyshop.service.MasterService;
 import com.ua.beautyshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.OrderBy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -29,52 +30,141 @@ public class HomeController {
     private CategoryService categoryService;
 
     @Autowired
-    public HomeController(ProductService productService,ProductRepository productRepository, MasterService masterService) {
+    public HomeController(ProductService productService, ProductRepository productRepository, MasterService masterService) {
         this.productService = productService;
-        this.masterService=masterService;
-        this.productRepository=productRepository;
+        this.masterService = masterService;
+        this.productRepository = productRepository;
     }
 
-    @GetMapping(value = {"/","/index","/home"})
-    public String home(Model model){
+    @GetMapping(value = {"/", "/index", "/home"})
+    public String home(Model model) {
         model.addAttribute("products", getAllProducts());
         model.addAttribute("productsCount", productsCount());
         model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("masters",getAllMasters());
+        model.addAttribute("masters", getAllMasters());
+
         return "home";
     }
 
-    @RequestMapping("/searchByCategory")
-    public String homePost(@RequestParam("categoryId") long categoryId, Model model){
+    @GetMapping("/searchByCategory")
+    public String homePost(@RequestParam("categoryId") long categoryId, Model model) {
+        List<Product> prodByCat = productService.findAllByCategoryId(categoryId);
+        getAllProductsCategory(model, prodByCat);
         model.addAttribute("category", productService.findAllByCategoryId(categoryId));
         model.addAttribute("categoryCount", productService.count());
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("masters", getAllMasters());
+
         return "home";
     }
-    @RequestMapping("/searchByMaster")
-    private String getAllMasters(@RequestParam("masterId") long masterId, Model model) {
-        model.addAttribute("masterId", masterService.findById(masterId));
-        model.addAttribute("allMasters", masterService.findAll());
-        return  "home";
+
+    @GetMapping("/search")
+    public String search(Model model, @RequestParam("keyword") String keyword) {
+
+        List<Product> copy = new ArrayList<>();
+
+        copy.add(productService.findByName(keyword));
+        model.addAttribute("products", copy);
+        model.addAttribute("categoryCount", productService.count());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("masters", getAllMasters());
+        model.addAttribute("productsCount", productsCount());
+        return "home";
     }
 
+    @GetMapping("/searchByMaster")
+    private String searchByMaster(@RequestParam("masterId") long masterId, Model model) {
+        List<Product> product = productService.findAll();
+        List<Product> copyProduct = new ArrayList<>();
+        for (Product prod : product) {
+            if (prod.getMaster() == masterService.findById(masterId))
+                copyProduct.add(prod);
+        }
+        model.addAttribute("productsCount", productsCount());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("masters", getAllMasters());
+        getAllProducts(model, copyProduct);
+        return "home";
+    }
+
+
+    @GetMapping("/sortMasterByRate")
+    private String sortRate(Model model) {
+
+        getMastersSorted(model, getAllMastersByRate());
+        model.addAttribute("productsCount", productsCount());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("products", productService.findAll());
+        return "home";
+    }
+
+    @GetMapping("/sortMasterByName")
+    private String sortName(Model model) {
+
+        getMastersSorted(model, getAllMastersByName());
+        model.addAttribute("categories", categoryService.findAll());
+        return "redirect:/home";
+    }
+
+
+    private void getMastersSorted(Model model, List<Master> attribute) {
+        model.addAttribute("masters", attribute);
+    }
+
+    private void getAllProducts(Model model, List<Product> attribute) {
+        model.addAttribute("products", attribute);
+    }
+
+    private void getAllProductsCategory(Model model, List<Product> attribute) {
+        model.addAttribute("products", attribute);
+    }
+
+
     @GetMapping("/about")
-    public String about(){
+    public String about() {
         return "about";
     }
 
-    private List<Product> getAllProducts(){
+    private List<Product> getAllProducts() {
 
         return productService.findAllByOrderByIdAsc();
     }
 
-    private List<Master>getAllMasters(){return masterService.findAll();}
+
+    private List<Master> getAllMasters() {
+        return masterService.findAll();
+    }
 
 
+    private List<Master> getAllMastersByName() {
+        List copy = masterService.findAll();
+        Collections.sort(copy, new NameComparator());
+        return copy;
+    }
+
+    private List<Master> getAllMastersByRate() {
+        List copy = masterService.findAll();
+        Collections.sort(copy, new RateComparator());
+        return copy;
+    }
 
 
+    class RateComparator implements Comparator<Master> {
+        @Override
+        public int compare(Master a, Master b) {
+            return a.getRate() < b.getRate() ? 1 : a.getRate() == b.getRate() ? 0 : -1;
+        }
+    }
 
-    private long productsCount(){
+    class NameComparator implements Comparator<Master> {
+        @Override
+        public int compare(Master a, Master b) {
+            return a.getUsername().compareToIgnoreCase(b.getUsername());
+        }
+    }
+
+
+    private long productsCount() {
         return productService.count();
     }
 }

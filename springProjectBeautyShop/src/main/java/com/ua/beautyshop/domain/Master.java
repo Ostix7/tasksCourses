@@ -15,6 +15,7 @@ public class Master {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+
     @Column(name="username")
     @NotEmpty
     @NotNull
@@ -39,5 +40,13 @@ public class Master {
     @DecimalMax("5.0")
     private double rate;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+
+        return id == product.getId();
+    }
 
 }

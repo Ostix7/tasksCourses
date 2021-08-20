@@ -69,7 +69,24 @@ public class MasterServiceImpl implements MasterService {
     }
 
     @Override
+    public Master findByRate(double rate) {
+        return masterRepository.findByRate(rate);
+    }
+
+
+
+
+
+
+    @Override
     public List<Master> findAll() {
         return masterRepository.findAll();
     }
+
+
+
+//    @Override
+//    public List<Master> findAllByUsername() {
+//        return masterRepository.findAllByUsername();
+//    }
 }

@@ -62,6 +62,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void cartCheckout() {
         cart.clear();
-        // Normally there would be payment etc.
+        // payment
     }
 }

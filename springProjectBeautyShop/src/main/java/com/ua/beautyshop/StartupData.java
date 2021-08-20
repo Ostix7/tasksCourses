@@ -40,6 +40,7 @@ public class StartupData implements CommandLineRunner {
         userAccount();
         masterAccount();
         master2Account();
+        master3Account();
         category();
         exampleProducts();
     }
@@ -71,8 +72,19 @@ public class StartupData implements CommandLineRunner {
         master2.setUsername("master2");
         master2.setPassword("master2");
         master2.setPasswordConfirm("master2");
+        master2.setRate(4.0);
         master2.setImageUrl("https://lh3.googleusercontent.com/proxy/S9NXghjIIzSC6ZDMST8H6-gY1iPGGbqSQ1Cqx9qQZAk4uBdZ98j7LSDB_FyWOLglHkSFVlbvzNiUuKV_N__NBBLNhmAd4a1jRYwNpi0h6SamsgcVMk-WSLrLk8ZjUR0OPky3uGqysiUQQj_6ryGNKLRfh4eEI8QbS3PR5YtJWL4qnuhkxO1GmKc4J0QSlHV0HyjE-tiiuYqzWoIxhdWoCPY");
         masterService.save(master2);
+    }
+    private void master3Account(){
+        Master master3 = new Master();
+
+        master3.setUsername("z");
+        master3.setPassword("master2");
+        master3.setPasswordConfirm("master2");
+        master3.setRate(2.0);
+        master3.setImageUrl("https://lh3.googleusercontent.com/proxy/S9NXghjIIzSC6ZDMST8H6-gY1iPGGbqSQ1Cqx9qQZAk4uBdZ98j7LSDB_FyWOLglHkSFVlbvzNiUuKV_N__NBBLNhmAd4a1jRYwNpi0h6SamsgcVMk-WSLrLk8ZjUR0OPky3uGqysiUQQj_6ryGNKLRfh4eEI8QbS3PR5YtJWL4qnuhkxO1GmKc4J0QSlHV0HyjE-tiiuYqzWoIxhdWoCPY");
+        masterService.save(master3);
     }
 
     private void adminAccount(){
@@ -101,7 +113,7 @@ public class StartupData implements CommandLineRunner {
 
     private void exampleProducts(){
         final String NAME = "Example Name";
-        final String IMAGE_URL = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/download-51-1567099294.jpeg?resize=480:*";
+        final String IMAGE_URL = "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/download-51-1567099294.jpeg?resize=780:*";
         final String DESCRIPTION = "Nails";
         final BigDecimal PRICE = BigDecimal.valueOf(22);
 
@@ -110,32 +122,32 @@ public class StartupData implements CommandLineRunner {
         Product product3 = new Product();
         Product product4 = new Product();
 
-        product1.setName("B"+NAME);
+        product1.setName("Nails ckean");
         product1.setImageUrl(IMAGE_URL);
-        product1.setDescription(DESCRIPTION);
+        product1.setDescription("cutting of nails");
         product1.setCategory(categoryRepository.findByCategoryName("Nails"));
         product1.setPrice(PRICE);
-        product1.setMaster( masterService.findByUsername("master2"));
+        product1.setMaster( masterService.findByUsername("master"));
 
 
-        product2.setName("A "+NAME);
+        product2.setName("Nails cut");
         product2.setImageUrl(IMAGE_URL);
-        product2.setDescription(DESCRIPTION);
+        product2.setDescription("cutting of nails");
         product2.setCategory(categoryRepository.findByCategoryName("Nails"));
         product2.setPrice(PRICE);
         product2.setMaster( masterService.findByUsername("master2"));
 
 
         product3.setName("c"+NAME);
-        product3.setImageUrl(IMAGE_URL);
-        product3.setDescription(DESCRIPTION);
+        product3.setImageUrl("https://www.modnapricha.info/wp-content/uploads/2020/02/krasivaya-pricheska-na-1-sentyabrya-bystro-i-prosto40.jpg");
+        product3.setDescription("р");
         product3.setCategory(categoryRepository.findByCategoryName("Hair"));
         product3.setPrice(PRICE);
         product3.setMaster( masterService.findByUsername("master"));
 
 
         product4.setName(NAME);
-        product4.setImageUrl(IMAGE_URL);
+        product4.setImageUrl("https://www.modnapricha.info/wp-content/uploads/2020/02/krasivaya-pricheska-na-1-sentyabrya-bystro-i-prosto40.jpg");
         product4.setDescription(DESCRIPTION);
         product4.setCategory(categoryRepository.findByCategoryName("Hair"));
         product4.setPrice(PRICE);
