@@ -35,8 +35,25 @@
                 </div>
             </nav>
 
+            <div > <form  th:action="@{/schedule}"sec:authorize="hasRole('ROLE_MASTER')">
+                <button class="action-button shadow animate purple" th:text="#{masters.schedule}" >
+                </button>
+            </form></div>
+            <div class="center"  style=" margin: 5px auto; align:center;" sec:authorize="hasRole('ROLE_MASTER')">
 
-            <button sec:authorize="hasRole('ROLE_MASTER')" class="btn-block" th:text="#{masters.schedule}"></button>
+
+                <div class="card" >
+
+                    <img class="card-img-top" th:src="${master.getImageUrl()}" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="${master.getUsername()}"></h4>
+                        <p class="card-text" th:text="Rate +' ('+${master.getRate()}+')'"></p>
+                    </div>
+
+                </div>
+            </div>
+
+
 
 
 

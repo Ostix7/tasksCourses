@@ -1,5 +1,6 @@
 package com.ua.beautyshop.controller;
 
+import com.ua.beautyshop.domain.Order;
 import com.ua.beautyshop.service.ShoppingCartService;
 import com.ua.beautyshop.domain.Product;
 import com.ua.beautyshop.service.ProductService;
@@ -9,7 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Controller
 public class CartController {
@@ -27,6 +33,7 @@ public class CartController {
     public String cart(Model model){
         model.addAttribute("products", shoppingCartService.productsInCart());
         model.addAttribute("totalPrice", shoppingCartService.totalPrice());
+        model.addAttribute("order",new Order());
 
         return "cart";
     }
@@ -34,10 +41,9 @@ public class CartController {
     @GetMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") long id){
         Product product = productService.findById(id);
-        if (product != null){
             shoppingCartService.addProduct(product);
             logger.debug(String.format("Product with id: %s added to shopping cart.", id));
-        }
+
         return "redirect:/home";
     }
 
@@ -59,9 +65,10 @@ public class CartController {
     }
 
     @GetMapping("/cart/checkout")
-    public String cartCheckout(){
-        shoppingCartService.cartCheckout();
-
-        return "redirect:/cart";
+    public String cartCheckout(@ModelAttribute("order")Order order ){
+        shoppingCartService.cartCheckout(order.getRegistrationDate(),order.getEstimatedCheckInTime());
+        return "redirect:/home";
     }
+
+
 }

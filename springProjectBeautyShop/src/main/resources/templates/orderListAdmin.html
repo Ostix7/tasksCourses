@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+<table class="table table-dark" border="1" style=" margin: auto;" >
+    <tr>
+        <th> Order id</th>
+        <th> UserId</th>
+        <th> Date</th>
+        <th> Time</th>
+        <th> Total price</th>
+        <th>Option</th>
+        <th>Accepted</th>
+
+    </tr>
+
+    <tr th:each="masterorder : ${masterorders}">
+        <td  th:text="${masterorder.getId()}"></td>
+        <td  th:text="${masterorder.getUserId()}"></td>
+        <td  th:text="${masterorder.getRegistrationDate()}"></td>
+        <td  th:text="${masterorder.getEstimatedCheckInTime()}"></td>
+        <td  th:text="${masterorder.getTotalPrice()}"></td>
+        <td> <div class="row">
+            <a th:href="@{'/orderListAdmin/accept/{id}'(id=${masterorder.getId()})}">
+            <button type="submit" class="buttonaccept">Accept</button>
+            </a>
+
+            <form action="/orderListAdmin/decline" th:method="delete" >
+                <input type="hidden" th:value="${masterorder.getId()}" th:attr="name='Id'"/>
+                <button type="submit" class="buttondecline"  th:text="Decline">
+                </button>
+            </form>
+
+            <form action="/orderListAdmin/decline" th:method="delete" >
+                <input type="hidden" th:value="${masterorder.getId()}" th:attr="name='Id'"/>
+                <button type="submit" class="buttondecline"  th:text="Decline">
+                </button>
+            </form>
+           </div>
+        </td>
+        <td th:text="${masterorder.getStatus()}"> </td>
+    </tr>
+</table>
+</body>
+</html>
+

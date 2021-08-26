@@ -1,39 +1,41 @@
 package com.ua.beautyshop.controller;
 
 import com.ua.beautyshop.domain.Master;
+import com.ua.beautyshop.domain.Order;
 import com.ua.beautyshop.domain.Product;
 import com.ua.beautyshop.repository.ProductRepository;
 import com.ua.beautyshop.service.CategoryService;
 import com.ua.beautyshop.service.MasterService;
+import com.ua.beautyshop.service.OrderService;
 import com.ua.beautyshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.OrderBy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
     private final ProductService productService;
     private final MasterService masterService;
     private final ProductRepository productRepository;
+    private final OrderService orderService;
 
     @Autowired
     private CategoryService categoryService;
 
     @Autowired
-    public HomeController(ProductService productService, ProductRepository productRepository, MasterService masterService) {
+    public HomeController(ProductService productService, ProductRepository productRepository, MasterService masterService, OrderService orderService) {
         this.productService = productService;
         this.masterService = masterService;
         this.productRepository = productRepository;
+        this.orderService = orderService;
     }
 
     @GetMapping(value = {"/", "/index", "/home"})
@@ -42,6 +44,7 @@ public class HomeController {
         model.addAttribute("productsCount", productsCount());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("masters", getAllMasters());
+        model.addAttribute("master",getMaster());
 
         return "home";
     }
@@ -76,10 +79,14 @@ public class HomeController {
     private String searchByMaster(@RequestParam("masterId") long masterId, Model model) {
         List<Product> product = productService.findAll();
         List<Product> copyProduct = new ArrayList<>();
+
         for (Product prod : product) {
             if (prod.getMaster() == masterService.findById(masterId))
                 copyProduct.add(prod);
         }
+//        product.stream().filter(pr -> pr.getMaster().equals(masterService.findById(masterId)))
+//                            .collect(Collectors.toList());
+
         model.addAttribute("productsCount", productsCount());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("masters", getAllMasters());
@@ -106,6 +113,16 @@ public class HomeController {
         return "redirect:/home";
     }
 
+    @GetMapping("/schedule")
+    private String getSchedule(Model model){
+        List<Order> masterAllOrders=orderService.findAllByMaster(getMaster());
+        List<Order> acceptedOrders=orderService.findAllByStatus(true);
+        List<Order>notDoneOrders=orderService.findAllByDone(false);
+        masterAllOrders.retainAll(acceptedOrders);
+        masterAllOrders.retainAll(notDoneOrders);
+        model.addAttribute("schedules",masterAllOrders);
+        return "schedule";
+    }
 
     private void getMastersSorted(Model model, List<Master> attribute) {
         model.addAttribute("masters", attribute);
@@ -164,7 +181,14 @@ public class HomeController {
     }
 
 
-    private long productsCount() {
+
+
+    public Master getMaster() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+        return masterService.findByUsername(username);
+    }
+        private long productsCount() {
         return productService.count();
     }
 }

@@ -85,6 +85,7 @@ public class MasterServiceImpl implements MasterService {
 
 
 
+
 //    @Override
 //    public List<Master> findAllByUsername() {
 //        return masterRepository.findAllByUsername();

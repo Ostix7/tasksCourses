@@ -63,6 +63,8 @@ public class ProductController {
         if (product != null){
             model.addAttribute("productForm", product);
             model.addAttribute("method", "edit");
+            model.addAttribute("masters", masterService.findAll());
+            model.addAttribute("categories", categoryService.findAll());
             return "product";
         }else {
             return "error/404";

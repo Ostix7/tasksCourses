@@ -34,16 +34,14 @@ public class MasterDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username){
         Master master = masterRepository.findByUsername(username);
 
-        if (master != null) {
+
             Set<GrantedAuthority> authorities = new HashSet<>();
 
                 authorities.add(new SimpleGrantedAuthority("ROLE_MASTER"));
 
             logger.debug(String.format("User with name: %s and password: %s created.", master.getUsername(), master.getPassword()));
             return new org.springframework.security.core.userdetails.User(master.getUsername(), master.getPassword(), authorities);
-        }else{
-            throw new UsernameNotFoundException("Master " + username + " not found!");
-        }
+
     }
 
 

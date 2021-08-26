@@ -4,6 +4,11 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -40,6 +45,7 @@ public class Master {
     @DecimalMax("5.0")
     private double rate;
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,5 +54,8 @@ public class Master {
 
         return id == product.getId();
     }
+
+
+
 
 }

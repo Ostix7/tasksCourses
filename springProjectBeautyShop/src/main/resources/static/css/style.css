@@ -8,6 +8,65 @@ body {
     margin: 0;
     padding-bottom: 6rem;
     min-height: 100%;
+
+}
+
+.animate
+{
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+    position: relative;
+    padding: 10px 40px;
+    margin: 0px 10px 10px 0px;
+    float: left;
+    border-radius: 10px;
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    color: #FFF;
+    text-decoration: none;
+}
+
+.blue
+{
+    background-color: #3498DB;
+    border-bottom: 5px solid #2980B9;
+    text-shadow: 0px -2px #2980B9;
+}
+
+.red
+{
+    background-color: #E74C3C;
+    border-bottom: 5px solid #BD3E31;
+    text-shadow: 0px -2px #BD3E31;
+}
+
+.purple
+{
+    background-color: #c433ff;
+    border-bottom: 5px solid #c433ff;
+    text-shadow: 0px -2px #c433ff;
+}
+
+.yellow
+{
+    background-color: #F2CF66;
+    border-bottom: 5px solid #D1B358;
+    text-shadow: 0px -2px #D1B358;
+}
+
+.action-button:active
+{
+    transform: translate(0px,5px);
+    -webkit-transform: translate(0px,5px);
+    border-bottom: 1px solid;
+}
+.center {
+    border: 5px solid #c830ff;
+    text-align: center;
 }
 
 span {
@@ -66,4 +125,141 @@ nav {
 #cart {
     width: 44px;
     height: 44px;
+}
+
+.buttonaccept {
+    background-color: #004A7F;
+    -webkit-border-radius: 10px;
+    border-radius: 1px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 30px;
+    padding: 20px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+@-webkit-keyframes glowing1 {
+    0% { background-color: #97bf2d; -webkit-box-shadow: 0 0 3px #97bf2d; }
+    50% { background-color: #97bf2d; -webkit-box-shadow: 0 0 40px #97bf2d; }
+    100% { background-color: #97bf2d; -webkit-box-shadow: 0 0 3px #97bf2d; }
+}
+
+@-moz-keyframes glowing1 {
+    0% { background-color: #97bf2d; -moz-box-shadow: 0 0 3px #97bf2d; }
+    50% { background-color: #97bf2d; -moz-box-shadow: 0 0 40px #97bf2d; }
+    100% { background-color: #97bf2d; -moz-box-shadow: 0 0 3px #97bf2d; }
+}
+
+@-o-keyframes glowing1 {
+    0% { background-color: #97bf2d; box-shadow: 0 0 3px #97bf2d; }
+    50% { background-color: #97bf2d; box-shadow: 0 0 40px #97bf2d; }
+    100% { background-color: #97bf2d; box-shadow: 0 0 3px #97bf2d; }
+}
+
+@keyframes glowing1 {
+    0% { background-color: #97bf2d; box-shadow: 0 0 3px #97bf2d; }
+    50% { background-color: #97bf2d; box-shadow: 0 0 40px #97bf2d; }
+    100% { background-color: #97bf2d; box-shadow: 0 0 3px #97bf2d; }
+}
+
+.buttonaccept {
+    -webkit-animation: glowing1 1500ms infinite;
+    -moz-animation: glowing1 1500ms infinite;
+    -o-animation: glowing1 1500ms infinite;
+    animation: glowing1 1500ms infinite;
+}
+
+
+.buttondecline {
+    background-color: #004A7F;
+    -webkit-border-radius: 10px;
+    border-radius: 3px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 30px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+@-webkit-keyframes glowing {
+    0% { background-color: #ff1212; -webkit-box-shadow: 0 0 3px #ff1212; }
+    50% { background-color: #ff1212; -webkit-box-shadow: 0 0 40px #ff1212; }
+    100% { background-color: #ff1212; -webkit-box-shadow: 0 0 3px #ff1212; }
+}
+
+@-moz-keyframes glowing {
+    0% { background-color: #ff1212; -moz-box-shadow: 0 0 3px #ff1212; }
+    50% { background-color: #ff1212; -moz-box-shadow: 0 0 40px #ff1212; }
+    100% { background-color: #ff1212; -moz-box-shadow: 0 0 3px #ff1212; }
+}
+
+@-o-keyframes glowing {
+    0% { background-color: #ff1212; box-shadow: 0 0 3px #ff1212; }
+    50% { background-color: #ff1212; box-shadow: 0 0 40px #ff1212; }
+    100% { background-color: #ff1212; box-shadow: 0 0 3px #ff1212; }
+}
+
+@keyframes glowing {
+    0% { background-color: #ff1212; box-shadow: 0 0 3px #ff1212; }
+    50% { background-color: #ff1212; box-shadow: 0 0 40px #ff1212; }
+    100% { background-color: #ff1212; box-shadow: 0 0 3px #ff1212; }
+}
+
+.buttondecline {
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+}
+
+
+.buttonchange {
+    background-color: #004A7F;
+    -webkit-border-radius: 10px;
+    border-radius: 3px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 30px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+@-webkit-keyframes glowing2 {
+    0% { background-color: #1f23bb; -webkit-box-shadow: 0 0 3px #1f23bb; }
+    50% { background-color: #1f23bb; -webkit-box-shadow: 0 0 40px #1f23bb; }
+    100% { background-color: #1f23bb; -webkit-box-shadow: 0 0 3px #1f23bb; }
+}
+
+@-moz-keyframes glowing2 {
+    0% { background-color: #1f23bb; -moz-box-shadow: 0 0 3px #1f23bb; }
+    50% { background-color: #1f23bb; -moz-box-shadow: 0 0 40px #1f23bb; }
+    100% { background-color: #1f23bb; -moz-box-shadow: 0 0 3px #1f23bb; }
+}
+
+@-o-keyframes glowing2 {
+    0% { background-color: #1f23bb; box-shadow: 0 0 3px #1f23bb; }
+    50% { background-color: #1f23bb; box-shadow: 0 0 40px #1f23bb; }
+    100% { background-color: #1f23bb; box-shadow: 0 0 3px #1f23bb; }
+}
+
+@keyframes glowing2 {
+    0% { background-color: #1f23bb; box-shadow: 0 0 3px #1f23bb; }
+    50% { background-color: #1f23bb; box-shadow: 0 0 40px #1f23bb; }
+    100% { background-color: #1f23bb; box-shadow: 0 0 3px #1f23bb; }
+}
+
+.buttonchange {
+    -webkit-animation: glowing2 1500ms infinite;
+    -moz-animation: glowing2 1500ms infinite;
+    -o-animation: glowing2 1500ms infinite;
+    animation: glowing2 1500ms infinite;
 }

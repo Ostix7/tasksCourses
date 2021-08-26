@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header-css">
+</head>
+
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+<table class="table table-dark" border="1" style=" margin: auto;" >
+    <tr>
+        <th> Order id</th>
+        <th> UserId</th>
+        <th> Date</th>
+        <th> Time</th>
+        <th> Total price</th>
+        <th>Status</th>
+        <th>Complete</th>
+
+    </tr>
+
+    <tr th:each="masterorder : ${masterorders}">
+        <td  th:text="${masterorder.getId()}"></td>
+        <td  th:text="${masterorder.getUserId()}"></td>
+        <td  th:text="${masterorder.getRegistrationDate()}"></td>
+        <td  th:text="${masterorder.getEstimatedCheckInTime()}"></td>
+        <td  th:text="${masterorder.getTotalPrice()}"></td>
+        <td >
+            <a th:href="@{'/orderListMaster/done/{id}'(id=${masterorder.getId()})}">
+            <button class="buttonaccept">Done</button>
+        </a>
+        </td>
+        <td th:if="${masterorder.isDone()}">&#9989;</td>
+
+
+
+
+    </tr>
+</table>
+</body>
+</html>
+

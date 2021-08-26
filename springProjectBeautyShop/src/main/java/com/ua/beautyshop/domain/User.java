@@ -57,4 +57,8 @@ public class User {
     @Column(name = "balance")
     private BigDecimal balance;
 
+
+    public long getId() {
+        return id;
+    }
 }

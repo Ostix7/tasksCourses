@@ -1,12 +1,11 @@
 package com.ua.beautyshop;
 
-import com.ua.beautyshop.domain.Category;
-import com.ua.beautyshop.domain.Master;
-import com.ua.beautyshop.domain.Product;
+import com.ua.beautyshop.domain.*;
 import com.ua.beautyshop.repository.CategoryRepository;
+import com.ua.beautyshop.repository.OrderRepository;
 import com.ua.beautyshop.service.MasterService;
+import com.ua.beautyshop.service.OrderService;
 import com.ua.beautyshop.service.ProductService;
-import com.ua.beautyshop.domain.User;
 import com.ua.beautyshop.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Component
 public class StartupData implements CommandLineRunner {
@@ -22,16 +23,20 @@ public class StartupData implements CommandLineRunner {
     private final MasterService masterService;
     private final ProductService productService;
     private final CategoryRepository categoryRepository;
+    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private static final Logger logger = LoggerFactory.getLogger(StartupData.class);
 
 
 
     @Autowired
-    public StartupData(UserService userService,MasterService masterService, ProductService productService, CategoryRepository categoryRepository) {
+    public StartupData(UserService userService, MasterService masterService, ProductService productService, CategoryRepository categoryRepository, OrderRepository orderRepository, OrderService orderService) {
         this.userService = userService;
         this.masterService=masterService;
         this.productService = productService;
         this.categoryRepository = categoryRepository;
+        this.orderRepository = orderRepository;
+        this.orderService = orderService;
     }
 
     @Override
@@ -42,6 +47,7 @@ public class StartupData implements CommandLineRunner {
         master2Account();
         master3Account();
         category();
+        order();
         exampleProducts();
     }
 
@@ -51,10 +57,19 @@ public class StartupData implements CommandLineRunner {
         user.setPassword("user");
         user.setPasswordConfirm("user");
         user.setGender("Female");
-
         user.setEmail("user@example.com");
 
+
+        User user2 = new User();
+        user2.setUsername("user2");
+        user2.setPassword("user2");
+        user2.setPasswordConfirm("user2");
+        user2.setGender("Female");
+
+        user2.setEmail("user2@example.com");
+
         userService.save(user);
+        userService.save(user2);
     }
     private void masterAccount(){
         Master master = new Master();
@@ -63,7 +78,7 @@ public class StartupData implements CommandLineRunner {
         master.setPassword("master");
         master.setPasswordConfirm("master");
         master.setId(1);
-        master.setImageUrl("https://lh3.googleusercontent.com/proxy/S9NXghjIIzSC6ZDMST8H6-gY1iPGGbqSQ1Cqx9qQZAk4uBdZ98j7LSDB_FyWOLglHkSFVlbvzNiUuKV_N__NBBLNhmAd4a1jRYwNpi0h6SamsgcVMk-WSLrLk8ZjUR0OPky3uGqysiUQQj_6ryGNKLRfh4eEI8QbS3PR5YtJWL4qnuhkxO1GmKc4J0QSlHV0HyjE-tiiuYqzWoIxhdWoCPY");
+        master.setImageUrl("https://i.pinimg.com/originals/5f/20/77/5f20778bfa96dd81a3483816307e5fbe.jpg");
         masterService.save(master);
     }
     private void master2Account(){
@@ -97,6 +112,27 @@ public class StartupData implements CommandLineRunner {
         admin.setEmail("admin@example.com");
 
         userService.save(admin);
+    }
+    private void order(){
+        Order order=new Order();
+        order.setId(1);
+        order.setEstimatedCheckInTime(LocalTime.of(5,30));
+        order.setRegistrationDate(LocalDate.of(2021,12,14));
+        order.setUserId(1);
+        order.setTotalPrice(BigDecimal.valueOf(200.0));
+        order.setMaster(masterService.findByUsername("master"));
+        Order order2=new Order();
+        order2.setId(2);
+        order2.setEstimatedCheckInTime(LocalTime.of(6,30));
+        order2.setRegistrationDate(LocalDate.of(2021,12,14));
+        order2.setUserId(2);
+        order2.setTotalPrice(BigDecimal.valueOf(200.0));
+        order2.setMaster(masterService.findByUsername("master"));
+
+        orderRepository.save(order);
+        orderRepository.save(order2);
+
+
     }
 
     private void category(){

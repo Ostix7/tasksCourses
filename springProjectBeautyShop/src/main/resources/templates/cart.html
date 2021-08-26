@@ -1,6 +1,18 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<!-- 1. Подключить CSS-файл Bootstrap 3 -->
+<link rel="stylesheet" href="css/bootstrap.min.css"/>
+<!-- 2. Подключить CSS-файл библиотеки Bootstrap 3 DateTimePicker -->
+<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
 
+<!-- 3. Подключить библиотеку jQuery -->
+<script src="js/jquery.min.js"></script>
+<!-- 4. Подключить библиотеку moment -->
+<script src="js/moment-with-locales.min.js"></script>
+<!-- 5. Подключить js-файл фреймворка Bootstrap 3 -->
+<script src="js/bootstrap.min.js"></script>
+<!-- 6. Подключить js-файл библиотеки Bootstrap 3 DateTimePicker -->
+<script src="js/bootstrap-datetimepicker.min.js"></script>
 <head th:replace="fragments/header :: header-css">
 </head>
 
@@ -15,12 +27,28 @@
             <h3 th:text="${product.getKey().getName()}"></h3>
             <h4 th:text="${product.getValue()}"></h4>
             <h4 th:text="${product.getKey().getPrice()}"></h4>
+
             <a th:href="@{'/cart/remove/{id}'(id=${product.getKey().getId()})}" class="col-md-1">
                 <button type="button" class="btn btn-primary" th:text="#{cart.remove}"></button>
             </a>
             <br>
         </div>
     </div>
+    <form  th:action="@{/cart/checkout}" th:object="${order}">
+
+            <label for="datee">Введите дату:</label>
+            <input type="date" th:field="*{registrationDate}" class="form-control" id="datee">
+
+
+
+            <label for="time" >Введите время:</label>
+            <input type="time"  th:field="*{estimatedCheckInTime}" class="form-control" id="time">
+
+        <button type="submit" class="btn btn-success" th:text="#{cart.checkout}"></button>
+
+
+    </form>
+
 
     <div th:if="${products.isEmpty()}" class="col-3">
         <h2 th:text="#{cart.empty}"></h2>
@@ -31,16 +59,15 @@
         <button type="button" class="btn btn-info" th:text="#{cart.clear}"></button>
     </a>
 
+    <h3 th:text="#{cart.total} + ' ' + ${totalPrice}"></h3>
     <br>
-    <div class="row">
-        <h3 th:text="#{cart.total} + ' ' + ${totalPrice}"></h3>">
-        <a th:href="@{'/cart/checkout'}" class="col-md-1">
-            <button type="button" class="btn btn-success" th:text="#{cart.checkout}"></button>
-        </a>
-    </div>
+
+
+
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
+
 
 </body>
 
