@@ -86,8 +86,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void cartCheckout(LocalDate localDate,LocalTime localTime) {
         Order order=new Order(getUser(),localDate,localTime,totalPrice());
         order.setMaster(master);
-        orderService.save(order);
-        cart.clear();
+        BigDecimal balance = userService.findById(getUser()).getBalance();
+        if(balance.compareTo(totalPrice())==1){
+            orderService.save(order);
+            userService.findById(getUser()).setBalance((balance.subtract(totalPrice())));
+            cart.clear();
+        }
+
+
     }
 
     @Override

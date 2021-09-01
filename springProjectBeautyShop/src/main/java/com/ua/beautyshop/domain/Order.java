@@ -49,6 +49,9 @@ public class Order {
     @Column(name = "done")
     private boolean done=false;
 
+    @Column(name = "comment")
+    private String comment;
+
     public Order( long userId,LocalDate localDate,LocalTime localTime,BigDecimal totalPrice){
         this.userId = userId;
         this.registrationDate=localDate;
@@ -117,6 +120,14 @@ public class Order {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
 

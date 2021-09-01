@@ -14,6 +14,7 @@
         <th> Time</th>
         <th> Total price</th>
         <th>Status</th>
+        <th>Comment</th>
 
     </tr>
 
@@ -23,6 +24,11 @@
         <td  th:text="${masterorder.getEstimatedCheckInTime()}"></td>
         <td  th:text="${masterorder.getTotalPrice()}"></td>
         <td th:text="${masterorder.getStatus()}" ></td>
+        <td th:if="${masterorder.getStatus()}">
+            <a th:href="@{'/orderListUser/comment/{id}'(id=${masterorder.getId()})}">
+                <button class="buttonchange">Comment</button>
+            </a>
+        </td>
 
 
 

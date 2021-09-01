@@ -58,7 +58,7 @@ public class StartupData implements CommandLineRunner {
         user.setPasswordConfirm("user");
         user.setGender("Female");
         user.setEmail("user@example.com");
-
+        user.setBalance(BigDecimal.valueOf(1000));
 
         User user2 = new User();
         user2.setUsername("user2");

@@ -16,6 +16,7 @@
         <th> Total price</th>
         <th>Status</th>
         <th>Complete</th>
+        <th>Comment</th>
 
     </tr>
 
@@ -28,9 +29,10 @@
         <td >
             <a th:href="@{'/orderListMaster/done/{id}'(id=${masterorder.getId()})}">
             <button class="buttonaccept">Done</button>
-        </a>
+            </a>
         </td>
         <td th:if="${masterorder.isDone()}">&#9989;</td>
+        <td></td>
 
 
 

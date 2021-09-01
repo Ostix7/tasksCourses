@@ -53,6 +53,15 @@ private final OrderRepository orderRepository;
         return "redirect:/orderListMaster";
     }
 
+    @GetMapping("/orderListUser/comment/{id}")
+    private String commentOrder(@PathVariable("id")long id,@RequestParam(value = "comment") String comment){
+
+        orderService.findById(id).setComment(comment);
+        orderService.save(orderRepository.findById(id));
+
+        return "redirect:/orderListUser";
+    }
+
     @GetMapping("/orderListAdmin")
     private String getOrderListAdmin(Model model) {
         model.addAttribute("masterorders",orderService.findAll());
@@ -85,7 +94,7 @@ private final OrderRepository orderRepository;
 
 
     @DeleteMapping("/orderListAdmin/decline")
-    private String deleteOrder(@RequestParam(value = "Id") long id){
+        private String deleteOrder(@RequestParam(value = "Id") long id){
         orderRepository.delete(orderRepository.findById(id));
         return "redirect:/orderListAdmin";
 
