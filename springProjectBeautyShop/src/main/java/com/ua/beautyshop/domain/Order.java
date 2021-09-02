@@ -4,11 +4,11 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -51,6 +51,13 @@ public class Order {
 
     @Column(name = "comment")
     private String comment;
+
+    @Column(name="rate")
+    @NotEmpty
+    @NotNull
+    @DecimalMin("0.0")
+    @DecimalMax("5.0")
+    private double rate;
 
     public Order( long userId,LocalDate localDate,LocalTime localTime,BigDecimal totalPrice){
         this.userId = userId;
@@ -129,6 +136,17 @@ public class Order {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
+
+
 }
 
 

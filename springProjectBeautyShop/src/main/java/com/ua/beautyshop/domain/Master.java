@@ -1,5 +1,6 @@
 package com.ua.beautyshop.domain;
 
+import com.ua.beautyshop.service.OrderService;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ import java.util.Map;
 @Entity
 @Table(name = "master")
 public class Master {
-
     @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

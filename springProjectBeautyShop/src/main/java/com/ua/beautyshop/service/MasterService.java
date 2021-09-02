@@ -13,6 +13,7 @@ public interface MasterService {
     Master findById(long id);
     Master findByRate(double rate);
     List<Master> findAll();
+    double setRate(Master master);
 
 }
 

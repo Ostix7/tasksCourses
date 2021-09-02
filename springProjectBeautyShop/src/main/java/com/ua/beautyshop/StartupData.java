@@ -65,6 +65,7 @@ public class StartupData implements CommandLineRunner {
         user2.setPassword("user2");
         user2.setPasswordConfirm("user2");
         user2.setGender("Female");
+        user2.setBalance(BigDecimal.valueOf(1000));
 
         user2.setEmail("user2@example.com");
 
@@ -118,7 +119,7 @@ public class StartupData implements CommandLineRunner {
         order.setId(1);
         order.setEstimatedCheckInTime(LocalTime.of(5,30));
         order.setRegistrationDate(LocalDate.of(2021,12,14));
-        order.setUserId(1);
+        order.setUserId(3);
         order.setTotalPrice(BigDecimal.valueOf(200.0));
         order.setMaster(masterService.findByUsername("master"));
         Order order2=new Order();
@@ -126,7 +127,7 @@ public class StartupData implements CommandLineRunner {
         order2.setEstimatedCheckInTime(LocalTime.of(6,30));
         order2.setRegistrationDate(LocalDate.of(2021,12,14));
         order2.setUserId(2);
-        order2.setTotalPrice(BigDecimal.valueOf(200.0));
+        order2.setTotalPrice(BigDecimal.valueOf(1200.0));
         order2.setMaster(masterService.findByUsername("master"));
 
         orderRepository.save(order);

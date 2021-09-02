@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="fragments/header :: header-css">
+    <script src="jquery-3.5.1.min.js"></script>
 </head>
 
 <body>
@@ -25,27 +26,40 @@
         <td  th:text="${masterorder.getRegistrationDate()}"></td>
         <td  th:text="${masterorder.getEstimatedCheckInTime()}"></td>
         <td  th:text="${masterorder.getTotalPrice()}"></td>
-        <td> <div class="row">
-            <a th:href="@{'/orderListAdmin/accept/{id}'(id=${masterorder.getId()})}">
-            <button type="submit" class="buttonaccept">Accept</button>
+        <td th:if="${!masterorder.getStatus()}"> <div class="row">
+            <a  th:href="@{'/orderListAdmin/accept/{id}'(id=${masterorder.getId()})}">
+            <button id="submit_button" type="submit" class="buttonaccept">Accept</button>
             </a>
 
             <form action="/orderListAdmin/decline" th:method="delete" >
                 <input type="hidden" th:value="${masterorder.getId()}" th:attr="name='Id'"/>
-                <button type="submit" class="buttondecline"  th:text="Decline">
+                <button type="submit"  class="buttondecline"  th:text="Decline">
                 </button>
             </form>
 
-            <form action="/orderListAdmin/decline" th:method="delete" >
+
+            <form action="/orderListAdmin/change" th:method="post" >
                 <input type="hidden" th:value="${masterorder.getId()}" th:attr="name='Id'"/>
-                <button type="submit" class="buttondecline"  th:text="Decline">
+
+                <label class="control-label"for="orderDate"></label>
+                <input type="date" th:attr="name='date'" id="orderDate" class="form-control">
+
+                <label class="control-label"for="orderTime"></label>
+                <input type="time" th:attr="name='time'" id="orderTime" class="form-control">
+
+                <button type="submit" class="buttonchange"  th:text="Change">
                 </button>
             </form>
+
            </div>
         </td>
         <td th:text="${masterorder.getStatus()}"> </td>
     </tr>
+
 </table>
+<div th:if="${NoMoney}" class="alert alert-danger" role="alert">
+    Not enough money
+</div>
 </body>
 </html>
 

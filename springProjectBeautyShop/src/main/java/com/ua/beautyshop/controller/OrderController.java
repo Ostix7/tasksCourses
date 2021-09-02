@@ -7,12 +7,17 @@ import com.ua.beautyshop.service.MasterService;
 import com.ua.beautyshop.service.OrderService;
 import com.ua.beautyshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -53,10 +58,11 @@ private final OrderRepository orderRepository;
         return "redirect:/orderListMaster";
     }
 
-    @GetMapping("/orderListUser/comment/{id}")
-    private String commentOrder(@PathVariable("id")long id,@RequestParam(value = "comment") String comment){
+    @PostMapping("/orderListUser/comment")
+    private String commentOrder(@RequestParam(value = "rating")double rating,@RequestParam(value = "Id") long id,@RequestParam(value = "feedback") String comment){
 
         orderService.findById(id).setComment(comment);
+        orderService.findById(id).setRate(rating);
         orderService.save(orderRepository.findById(id));
 
         return "redirect:/orderListUser";
@@ -77,15 +83,25 @@ private final OrderRepository orderRepository;
         return "orderListUser";
     }
 
+
     @GetMapping("/orderListAdmin/accept/{id}")
-    private String acceptOrder(@PathVariable("id")long id,Model model){
+    public String acceptOrder(@PathVariable("id") long id, Model model){
+        BigDecimal price =orderService.findById(id).getTotalPrice();
+        long userId=orderService.findById(id).getUserId();
 
-        //TODO payment
-
-        orderService.findById(id).setStatus(true);
-        orderService.save(orderService.findById(id));
-        model.addAttribute("masterorders",orderService.findAll());
-        return "orderListAdmin";
+        if(price.compareTo(userService.findById(userId).getBalance())<=0){
+            BigDecimal substract =price.subtract(userService.findById(userId).getBalance());
+            userService.findById(userId).setBalance(substract.abs());
+            userService.save(userService.findById(userId));
+            orderService.findById(id).setStatus(true);
+            orderService.save(orderService.findById(id));
+            model.addAttribute("masterorders",orderService.findAll());
+        }
+        else{
+            model.addAttribute("masterorders",orderService.findAll());
+            model.addAttribute("NoMoney",true);
+        }
+            return "orderListAdmin";
     }
 
 
@@ -99,7 +115,15 @@ private final OrderRepository orderRepository;
         return "redirect:/orderListAdmin";
 
     }
+    @PostMapping("/orderListAdmin/change")
+    private String changeOrder(@RequestParam(value = "Id")long id, @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)  LocalDate date, @RequestParam(value = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)  LocalTime time){
 
+        orderService.findById(id).setRegistrationDate(date);
+        orderService.findById(id).setEstimatedCheckInTime(time);
+        orderService.save(orderRepository.findById(id));
+
+        return "redirect:/orderListAdmin";
+    }
 
 
     public long getUser() {

@@ -40,11 +40,13 @@ public class HomeController {
 
     @GetMapping(value = {"/", "/index", "/home"})
     public String home(Model model) {
+        setMasters();
         model.addAttribute("products", getAllProducts());
         model.addAttribute("productsCount", productsCount());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("masters", getAllMasters());
         model.addAttribute("master",getMaster());
+
 
         return "home";
     }
@@ -191,4 +193,10 @@ public class HomeController {
         private long productsCount() {
         return productService.count();
     }
+        private  void setMasters(){
+        List<Master> mastersList=masterService.findAll();
+            for (Master master:mastersList) {
+                masterService.setRate(master);
+            }
+        }
 }
