@@ -3,6 +3,7 @@ package main.java.dao.impl;
 import dao.ConnectionFactory;
 import dao.exception.DaoException;
 import dao.UserDao;
+import main.java.model.User;
 import model.enums.Role;
 import model.User;
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UserDaoImpl implements UserDao {
     private static final Logger log = Logger.getLogger(UserDaoImpl.class);
